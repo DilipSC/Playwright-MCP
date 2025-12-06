@@ -1,15 +1,15 @@
 # Use Apify's Python base image (3.13)
 FROM apify/actor-python:3.13
 
-# Switch to non-root user
-USER myuser
-
 # -----------------------------
-# Install Playwright + Chromium
+# Install Playwright + Chromium (as root)
 # -----------------------------
+USER root
 RUN pip install --no-cache-dir playwright && \
-    playwright install-deps && \
-    playwright install chromium
+    playwright install --with-deps chromium
+
+# Switch to non-root user for app
+USER myuser
 
 # -----------------------------
 # Install Python dependencies

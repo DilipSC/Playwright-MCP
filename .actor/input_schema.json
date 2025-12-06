@@ -1,0 +1,46 @@
+{
+  "title": "Playwright MCP Server Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "videoFile": {
+      "title": "Video File",
+      "type": "string",
+      "description": "Name of the video file in the videos directory (e.g., test_1.mp4)",
+      "editor": "textfield",
+      "default": "test_1.mp4"
+    },
+    "taskDescription": {
+      "title": "Task Description",
+      "type": "string",
+      "description": "Optional description of the task shown in the video",
+      "editor": "textarea"
+    },
+    "includeScreenshots": {
+      "title": "Include Screenshots",
+      "type": "boolean",
+      "description": "Include screenshot capture in generated script",
+      "default": false
+    },
+    "executeAfter": {
+      "title": "Execute After Generation",
+      "type": "boolean",
+      "description": "Automatically execute the generated script after analysis",
+      "default": true
+    },
+    "headless": {
+      "title": "Headless Mode",
+      "type": "boolean",
+      "description": "Run browser in headless mode",
+      "default": false
+    },
+    "slowMo": {
+      "title": "Slow Motion Delay (ms)",
+      "type": "integer",
+      "description": "Delay in milliseconds for debugging",
+      "default": 100,
+      "minimum": 0,
+      "maximum": 5000
+    }
+  }
+}

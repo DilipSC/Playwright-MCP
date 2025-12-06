@@ -3,18 +3,24 @@
   "name": "playwright-mcp",
   "title": "Playwright MCP Server",
   "description": "MCP server that performs browser automation tasks using Playwright and integrates with AI-driven task interpretation.",
-  "version": "1.0.0",
+  "version": "1.0",
+  "buildTag": "latest",
+
   "meta": {
     "templateId": "python-empty"
   },
+
   "input": "./input_schema.json",
   "dockerfile": "./Dockerfile",
   "readme": "./README.md",
+
   "environmentVariables": {
-    "GEMINI_API_KEY": {
-      "description": "Google Gemini API Key for task interpretation",
-      "type": "string",
-      "isSecret": true
-    }
+    "GEMINI_API_KEY": "Google Gemini API Key for task interpretation"
+  },
+
+  "defaultRunOptions": {
+    "useCache": false,
+    "memoryMbytes": 2048,
+    "timeoutSecs": 1800
   }
 }
