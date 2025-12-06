@@ -1,4 +1,5 @@
-# Feel free to add your Python dependencies below. For formatting guidelines, see:
-# https://pip.pypa.io/en/latest/reference/requirements-file-format/
-
-apify < 4.0.0
+apify>=1.7.0
+mcp>=0.9.0
+google-generativeai>=0.3.0
+playwright>=1.40.0
+python-dotenv>=1.0.0

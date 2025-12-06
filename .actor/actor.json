@@ -1,13 +1,20 @@
 {
-	"actorSpecification": 1,
-	"name": "playwright-mcp",
-	"title": "Empty Python project",
-	"description": "Empty project in Python.",
-	"version": "0.0",
-	"buildTag": "latest",
-	"meta": {
-		"templateId": "python-empty",
-		"generatedBy": "<FILL-IN-MODEL>"
-	},
-	"dockerfile": "../Dockerfile"
+  "actorSpecification": 1,
+  "name": "playwright-mcp",
+  "title": "Playwright MCP Server",
+  "description": "MCP server that performs browser automation tasks using Playwright and integrates with AI-driven task interpretation.",
+  "version": "1.0.0",
+  "meta": {
+    "templateId": "python-empty"
+  },
+  "input": "./input_schema.json",
+  "dockerfile": "./Dockerfile",
+  "readme": "./README.md",
+  "environmentVariables": {
+    "GEMINI_API_KEY": {
+      "description": "Google Gemini API Key for task interpretation",
+      "type": "string",
+      "isSecret": true
+    }
+  }
 }

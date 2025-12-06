@@ -1,35 +1,45 @@
-# First, specify the base Docker image.
-# You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
-# You can also use any other image from Docker Hub.
+# Use Apify's Python base image (3.13)
 FROM apify/actor-python:3.13
 
+# Switch to non-root user
 USER myuser
 
-# Second, copy just requirements.txt into the Actor image,
-# since it should be the only file that affects the dependency install in the next step,
-# in order to speed up the build
-COPY --chown=myuser:myuser requirements.txt ./
+# -----------------------------
+# Install Playwright + Chromium
+# -----------------------------
+RUN pip install --no-cache-dir playwright && \
+    playwright install-deps && \
+    playwright install chromium
 
-# Install the packages specified in requirements.txt,
-# Print the installed Python version, pip version
-# and all installed packages with their versions for debugging
+# -----------------------------
+# Install Python dependencies
+# -----------------------------
+
+# Copy only requirements first to leverage Docker caching
+COPY --chown=myuser:myuser requirements.txt ./requirements.txt
+
 RUN echo "Python version:" \
  && python --version \
  && echo "Pip version:" \
  && pip --version \
- && echo "Installing dependencies:" \
- && pip install -r requirements.txt \
+ && echo "Installing dependencies from requirements.txt:" \
+ && pip install --no-cache-dir -r requirements.txt \
  && echo "All installed Python packages:" \
  && pip freeze
 
-# Next, copy the remaining files and directories with the source code.
-# Since we do this after installing the dependencies, quick build will be really fast
-# for most source file changes.
+# -----------------------------
+# Copy remaining source code
+# -----------------------------
 COPY --chown=myuser:myuser . ./
 
-# Use compileall to ensure the runnability of the Actor Python code.
+# Optional: compile Python files to verify they are valid
 RUN python3 -m compileall -q src/
 
-# Specify how to launch the source code of your Actor.
-# By default, the "python3 -m ." command is run
-CMD ["python3", "-m", "src"]
+# -----------------------------
+# ENTRYPOINT
+# -----------------------------
+# Option A: run module (preferred)
+CMD ["python3", "-m", "src.main"]
+
+# Option B: if your entry is plain script:
+# CMD ["python3", "src/main.py"]
